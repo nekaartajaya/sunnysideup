@@ -8,7 +8,9 @@
       "tests": ["tests/*"],
       "@api/*": ["src/api/*"],
       "@components/*": ["src/components/*"],
-      "@pages/*": ["src/pages/*"]
+      "@pages/*": ["src/pages/*"],
+      "@redux/*": ["src/redux/*"],
+      "@interfaces/*": ["src/interfaces/*"]
     }
   },
   "include": ["app.d.ts"]
