@@ -10,7 +10,8 @@
       "@components/*": ["src/components/*"],
       "@pages/*": ["src/pages/*"],
       "@redux/*": ["src/redux/*"],
-      "@interfaces/*": ["src/interfaces/*"]
+      "@interfaces/*": ["src/interfaces/*"],
+      "@router/*": ["src/router/*"]
     }
   },
   "include": ["app.d.ts"]
