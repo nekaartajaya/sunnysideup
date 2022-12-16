@@ -1,0 +1,8 @@
+.expo
+.husky
+.github
+ios/
+android/
+node_modules/
+.bundle/
+vendor/
