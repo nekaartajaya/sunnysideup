@@ -13,12 +13,15 @@ import {Formik} from 'formik';
 import {FormSignup} from 'interfaces/form';
 import * as yup from 'yup';
 import FormError from 'components/FormError';
+import {signUpAPI} from 'api/AuthAPI';
 
 const Signup = ({navigation}: PropsNavigation) => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [showConfirmPassword, setShowConfirmPassword] =
     useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
+  const [success, setSuccess] = useState<string>('');
+  const [error, setError] = useState<string>('');
 
   const handleShowPassword = () => {
     setShowPassword(!showPassword);
@@ -43,20 +46,41 @@ const Signup = ({navigation}: PropsNavigation) => {
       .required('Password is required'),
     confirmPassword: yup
       .string()
-      .oneOf([yup.ref('password'), null], 'Passwords must match'),
+      .oneOf([yup.ref('password'), null], 'Passwords must match')
+      .required('Confirm Password is required'),
   });
 
-  const onSignup = (values: FormSignup) => {
-    console.log(values);
+  const onSignup = async (values: FormSignup) => {
+    setError('');
+    setSuccess('');
     setLoading(true);
-    setTimeout(() => {
+
+    const resp = await signUpAPI(values);
+    if (resp?.status === 200) {
+      setSuccess('Sign Up Success');
+      setTimeout(() => {
+        setLoading(false);
+        navigation.navigate('Login');
+      }, 2000);
+    } else {
+      setError(resp?.data);
       setLoading(false);
-    }, 3000);
+    }
   };
 
   return (
     <SafeAreaView className="flex-1 justify-center items-center bg-white">
       <Text className="mb-8">SIGN UP FORM</Text>
+      {error && (
+        <View className="w-4/5 mb-5 bg-red-100 py-1 px-2 rounded-[4px]">
+          <Text className="text-[10px] text-red-600">{error}</Text>
+        </View>
+      )}
+      {success && (
+        <View className="w-4/5 mb-5 bg-green-100 py-1 px-2 rounded-[4px]">
+          <Text className="text-[10px] text-green-600">{success}</Text>
+        </View>
+      )}
       <Formik
         validationSchema={signupValidationSchema}
         initialValues={{

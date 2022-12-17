@@ -14,7 +14,7 @@ import {FormLogin} from 'interfaces/form';
 import * as yup from 'yup';
 import FormError from 'components/FormError';
 import {Formik} from 'formik';
-import {loginAPI} from 'api/authAPI';
+import {loginAPI} from 'api/AuthAPI';
 import {useDispatch} from 'react-redux';
 import {SET_ACCESS_TOKEN, SET_USER} from 'redux/actions/types/auth';
 
@@ -34,7 +34,6 @@ const Login = ({navigation}: PropsNavigation) => {
   });
 
   const onLogin = async (values: FormLogin) => {
-    console.log(values);
     setError('');
     setLoading(true);
 
