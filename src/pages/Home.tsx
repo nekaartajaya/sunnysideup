@@ -1,11 +1,13 @@
-import {View, Text} from 'react-native';
+import {SafeAreaView} from 'react-native';
 import React from 'react';
+import Header from 'components/Header';
 
 const Home = () => {
   return (
-    <View>
-      <Text>Home</Text>
-    </View>
+    <>
+      <Header />
+      <SafeAreaView></SafeAreaView>
+    </>
   );
 };
 
