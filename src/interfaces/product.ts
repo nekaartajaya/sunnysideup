@@ -8,4 +8,6 @@ export interface ProductInterface {
   thumbnail: string;
   category: string;
   brand: string;
+  discountPercentage?: number;
+  image?: Array<string>;
 }

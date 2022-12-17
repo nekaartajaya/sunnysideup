@@ -14,7 +14,7 @@ import {FormLogin} from 'interfaces/form';
 import * as yup from 'yup';
 import FormError from 'components/FormError';
 import {Formik} from 'formik';
-import {loginAPI} from 'api/AuthAPI';
+import {loginAPI} from 'api/authAPI';
 import {useDispatch} from 'react-redux';
 import {SET_ACCESS_TOKEN, SET_USER} from 'redux/actions/types/auth';
 
@@ -70,6 +70,7 @@ const Login = ({navigation}: PropsNavigation) => {
         initialValues={{
           username: '',
           password: '',
+          expiresInMins: 1440,
         }}
         onSubmit={(values: FormLogin) => onLogin(values)}>
         {({

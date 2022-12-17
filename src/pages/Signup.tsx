@@ -13,7 +13,7 @@ import {Formik} from 'formik';
 import {FormSignup} from 'interfaces/form';
 import * as yup from 'yup';
 import FormError from 'components/FormError';
-import {signUpAPI} from 'api/AuthAPI';
+import {signUpAPI} from 'api/authAPI';
 
 const Signup = ({navigation}: PropsNavigation) => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
