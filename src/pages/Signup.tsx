@@ -5,6 +5,7 @@ import {
   TextInput,
   TouchableOpacity,
   ActivityIndicator,
+  Platform,
 } from 'react-native';
 import React, {useState} from 'react';
 import {PropsNavigation} from 'interfaces/navigation';
@@ -69,152 +70,166 @@ const Signup = ({navigation}: PropsNavigation) => {
   };
 
   return (
-    <SafeAreaView className="flex-1 justify-center items-center bg-white">
-      <Text className="mb-8">SIGN UP FORM</Text>
-      {error && (
-        <View className="w-4/5 mb-5 bg-red-100 py-1 px-2 rounded-[4px]">
-          <Text className="text-[10px] text-red-600">{error}</Text>
-        </View>
-      )}
-      {success && (
-        <View className="w-4/5 mb-5 bg-green-100 py-1 px-2 rounded-[4px]">
-          <Text className="text-[10px] text-green-600">{success}</Text>
-        </View>
-      )}
-      <Formik
-        validationSchema={signupValidationSchema}
-        initialValues={{
-          username: '',
-          email: '',
-          password: '',
-          confirmPassword: '',
-        }}
-        onSubmit={(values: FormSignup) => onSignup(values)}>
-        {({
-          handleChange,
-          handleSubmit,
-          handleBlur,
-          touched,
-          values,
-          errors,
-          isValid,
-        }) => (
-          <View className="w-full mb-5">
-            <View className="w-4/5 self-center mb-4">
-              <View className="border px-2 py-3 rounded-[4px] relative">
-                <Text className="absolute top-[-10px] left-1 bg-white px-1">
-                  Username
-                </Text>
-                <TextInput
-                  editable={!loading}
-                  onBlur={handleBlur('username')}
-                  onChangeText={handleChange('username')}
-                  value={values.username}
-                />
-              </View>
-              {errors.username && touched.username && (
-                <FormError text={errors.username} />
-              )}
-            </View>
-            <View className="w-4/5 self-center mb-4">
-              <View className="border px-2 py-3 rounded-[4px] relative">
-                <Text className="absolute top-[-10px] left-1 bg-white px-1">
-                  Email
-                </Text>
-                <TextInput
-                  editable={!loading}
-                  onBlur={handleBlur('email')}
-                  onChangeText={handleChange('email')}
-                  value={values.email}
-                />
-              </View>
-              {errors.email && touched.email && (
-                <FormError text={errors.email} />
-              )}
-            </View>
-
-            <View className="w-4/5 self-center mb-4">
-              <View className="border px-2 py-3 rounded-[4px] relative">
-                <Text className="absolute top-[-10px] left-1 bg-white px-1">
-                  Password
-                </Text>
-                <TextInput
-                  editable={!loading}
-                  className="pr-10"
-                  onBlur={handleBlur('password')}
-                  onChangeText={handleChange('password')}
-                  value={values.password}
-                  secureTextEntry={!showPassword}
-                />
-                <TouchableOpacity
-                  onPress={handleShowPassword}
-                  className="absolute right-2 bottom-2">
-                  {showPassword ? (
-                    <Icon name="eye-with-line" type="entypo" color="#517fa4" />
-                  ) : (
-                    <Icon name="eye" type="entypo" color="#517fa4" />
-                  )}
-                </TouchableOpacity>
-              </View>
-              {errors.password && touched.password && (
-                <FormError text={errors.password} />
-              )}
-            </View>
-            <View className="w-4/5 self-center mb-4">
-              <View className="border px-2 py-3 rounded-[4px] relative">
-                <Text className="absolute top-[-10px] left-1 bg-white px-1">
-                  Confirm Password
-                </Text>
-                <TextInput
-                  editable={!loading}
-                  className="pr-10"
-                  onBlur={handleBlur('confirmPassword')}
-                  onChangeText={handleChange('confirmPassword')}
-                  value={values.confirmPassword}
-                  secureTextEntry={!showConfirmPassword}
-                />
-                <TouchableOpacity
-                  onPress={handleShowConfirmPassword}
-                  className="absolute right-2 bottom-2">
-                  {showConfirmPassword ? (
-                    <Icon name="eye-with-line" type="entypo" color="#517fa4" />
-                  ) : (
-                    <Icon name="eye" type="entypo" color="#517fa4" />
-                  )}
-                </TouchableOpacity>
-              </View>
-              {errors.confirmPassword && touched.confirmPassword && (
-                <FormError text={errors.confirmPassword} />
-              )}
-            </View>
-            <TouchableOpacity
-              disabled={loading || !isValid}
-              onPress={() => handleSubmit()}
-              className={`bg-[#106EEA] rounded-[4px] py-2 px-5 w-[150px] self-center ${
-                loading || !isValid ? 'opacity-50' : 'opacity-100'
-              }`}>
-              {loading ? (
-                <View className="flex-row items-center space-x-2">
-                  <ActivityIndicator color="#FFF" />
-                  <Text className="text-white">Loading ...</Text>
-                </View>
-              ) : (
-                <Text className="mx-auto text-white font-bold">Sign Up</Text>
-              )}
-            </TouchableOpacity>
+    <SafeAreaView className="flex-1 justify-center items-center">
+      <View className="justify-center items-center bg-white py-6 w-[90%] rounded-md shadow-md drop-shadow-md">
+        <Text className="mb-8 font-bold text-xl">SIGN UP FORM</Text>
+        {error && (
+          <View className="w-4/5 mb-5 bg-red-100 py-1 px-2 rounded-[4px]">
+            <Text className="text-[10px] text-red-600">{error}</Text>
           </View>
         )}
-      </Formik>
+        {success && (
+          <View className="w-4/5 mb-5 bg-green-100 py-1 px-2 rounded-[4px]">
+            <Text className="text-[10px] text-green-600">{success}</Text>
+          </View>
+        )}
+        <Formik
+          validationSchema={signupValidationSchema}
+          initialValues={{
+            username: '',
+            email: '',
+            password: '',
+            confirmPassword: '',
+          }}
+          onSubmit={(values: FormSignup) => onSignup(values)}>
+          {({
+            handleChange,
+            handleSubmit,
+            handleBlur,
+            touched,
+            values,
+            errors,
+            isValid,
+          }) => (
+            <View className="w-full mb-5">
+              <View className="w-4/5 self-center mb-4">
+                <View className="border border-gray-500 px-2 py-3 rounded-[4px] relative">
+                  <Text className="absolute top-[-10px] left-1 bg-white px-1 text-gray-600">
+                    Username
+                  </Text>
+                  <TextInput
+                    editable={!loading}
+                    onBlur={handleBlur('username')}
+                    onChangeText={handleChange('username')}
+                    value={values.username}
+                  />
+                </View>
+                {errors.username && touched.username && (
+                  <FormError text={errors.username} />
+                )}
+              </View>
+              <View className="w-4/5 self-center mb-4">
+                <View className="border border-gray-500 px-2 py-3 rounded-[4px] relative">
+                  <Text className="absolute top-[-10px] left-1 bg-white px-1 text-gray-600">
+                    Email
+                  </Text>
+                  <TextInput
+                    editable={!loading}
+                    onBlur={handleBlur('email')}
+                    onChangeText={handleChange('email')}
+                    value={values.email}
+                  />
+                </View>
+                {errors.email && touched.email && (
+                  <FormError text={errors.email} />
+                )}
+              </View>
 
-      <View className="flex-row">
-        <Text>Already have account ? </Text>
-        <TouchableOpacity>
-          <Text
-            onPress={() => navigation.navigate('Login')}
-            className="text-[#106EEA] underline">
-            Login now
-          </Text>
-        </TouchableOpacity>
+              <View className="w-4/5 self-center mb-4">
+                <View className="border border-gray-500 px-2 py-3 rounded-[4px] relative">
+                  <Text className="absolute top-[-10px] left-1 bg-white px-1 text-gray-600">
+                    Password
+                  </Text>
+                  <TextInput
+                    editable={!loading}
+                    className="pr-10"
+                    onBlur={handleBlur('password')}
+                    onChangeText={handleChange('password')}
+                    value={values.password}
+                    secureTextEntry={!showPassword}
+                  />
+                  <TouchableOpacity
+                    onPress={handleShowPassword}
+                    className={`absolute right-2 ${
+                      Platform.OS === 'ios' ? 'bottom-2' : 'bottom-3'
+                    }`}>
+                    {showPassword ? (
+                      <Icon
+                        name="eye-with-line"
+                        type="entypo"
+                        color="#517fa4"
+                      />
+                    ) : (
+                      <Icon name="eye" type="entypo" color="#517fa4" />
+                    )}
+                  </TouchableOpacity>
+                </View>
+                {errors.password && touched.password && (
+                  <FormError text={errors.password} />
+                )}
+              </View>
+              <View className="w-4/5 self-center mb-4">
+                <View className="border border-gray-500 px-2 py-3 rounded-[4px] relative">
+                  <Text className="absolute top-[-10px] left-1 bg-white px-1 text-gray-600">
+                    Confirm Password
+                  </Text>
+                  <TextInput
+                    editable={!loading}
+                    className="pr-10"
+                    onBlur={handleBlur('confirmPassword')}
+                    onChangeText={handleChange('confirmPassword')}
+                    value={values.confirmPassword}
+                    secureTextEntry={!showConfirmPassword}
+                  />
+                  <TouchableOpacity
+                    onPress={handleShowConfirmPassword}
+                    className={`absolute right-2 ${
+                      Platform.OS === 'ios' ? 'bottom-2' : 'bottom-3'
+                    }`}>
+                    {showConfirmPassword ? (
+                      <Icon
+                        name="eye-with-line"
+                        type="entypo"
+                        color="#517fa4"
+                      />
+                    ) : (
+                      <Icon name="eye" type="entypo" color="#517fa4" />
+                    )}
+                  </TouchableOpacity>
+                </View>
+                {errors.confirmPassword && touched.confirmPassword && (
+                  <FormError text={errors.confirmPassword} />
+                )}
+              </View>
+              <TouchableOpacity
+                disabled={loading || !isValid}
+                onPress={() => handleSubmit()}
+                className={`bg-[#106EEA] rounded-[4px] py-2 px-5 w-[150px] self-center ${
+                  loading || !isValid ? 'opacity-50' : 'opacity-100'
+                }`}>
+                {loading ? (
+                  <View className="flex-row items-center space-x-2">
+                    <ActivityIndicator color="#FFF" />
+                    <Text className="text-white">Loading ...</Text>
+                  </View>
+                ) : (
+                  <Text className="mx-auto text-white font-bold">Sign Up</Text>
+                )}
+              </TouchableOpacity>
+            </View>
+          )}
+        </Formik>
+
+        <View className="flex-row">
+          <Text>Already have account ? </Text>
+          <TouchableOpacity>
+            <Text
+              onPress={() => navigation.navigate('Login')}
+              className="text-[#106EEA] underline">
+              Login now
+            </Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </SafeAreaView>
   );

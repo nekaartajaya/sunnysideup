@@ -5,6 +5,7 @@ import {
   TextInput,
   TouchableOpacity,
   ActivityIndicator,
+  Platform,
 } from 'react-native';
 import React, {useState} from 'react';
 import {PropsNavigation} from 'interfaces/navigation';
@@ -58,103 +59,111 @@ const Login = ({navigation}: PropsNavigation) => {
   };
 
   return (
-    <SafeAreaView className="flex-1 justify-center items-center bg-white">
-      <Text className="mb-8">WELCOME</Text>
-      {error && (
-        <View className="w-4/5 mb-5 bg-red-100 py-1 px-2 rounded-[4px]">
-          <Text className="text-[10px] text-red-600">{error}</Text>
-        </View>
-      )}
-      <Formik
-        validationSchema={loginValidationSchema}
-        initialValues={{
-          username: '',
-          password: '',
-          expiresInMins: 1440,
-        }}
-        onSubmit={(values: FormLogin) => onLogin(values)}>
-        {({
-          handleChange,
-          handleSubmit,
-          handleBlur,
-          values,
-          errors,
-          touched,
-          isValid,
-        }) => (
-          <View className="w-full mb-5">
-            <View className="w-4/5 self-center mb-4">
-              <View className="border px-2 py-3 rounded-[4px] relative">
-                <Text className="absolute top-[-10px] left-1 bg-white px-1">
-                  Username
-                </Text>
-                <TextInput
-                  editable={!loading}
-                  onBlur={handleBlur('username')}
-                  onChangeText={handleChange('username')}
-                  value={values.username}
-                />
-              </View>
-              {errors.username && touched.username && (
-                <FormError text={errors.username} />
-              )}
-            </View>
-
-            <View className="w-4/5 self-center mb-4">
-              <View className="border px-2 py-3 rounded-[4px] relative">
-                <Text className="absolute top-[-10px] left-1 bg-white px-1">
-                  Password
-                </Text>
-                <TextInput
-                  editable={!loading}
-                  className="pr-10"
-                  onBlur={handleBlur('password')}
-                  onChangeText={handleChange('password')}
-                  value={values.password}
-                  secureTextEntry={!showPassword}
-                />
-                <TouchableOpacity
-                  onPress={handleShowPassword}
-                  className="absolute right-2 bottom-2">
-                  {showPassword ? (
-                    <Icon name="eye-with-line" type="entypo" color="#517fa4" />
-                  ) : (
-                    <Icon name="eye" type="entypo" color="#517fa4" />
-                  )}
-                </TouchableOpacity>
-              </View>
-              {errors.password && touched.password && (
-                <FormError text={errors.password} />
-              )}
-            </View>
-            <TouchableOpacity
-              disabled={loading || !isValid}
-              onPress={() => handleSubmit()}
-              className={`bg-[#106EEA] rounded-[4px] py-2 px-5 w-[150px] self-center ${
-                loading || !isValid ? 'opacity-50' : 'opacity-100'
-              }`}>
-              {loading ? (
-                <View className="flex-row items-center space-x-2">
-                  <ActivityIndicator color="#FFF" />
-                  <Text className="text-white">Loading ...</Text>
-                </View>
-              ) : (
-                <Text className="mx-auto text-white font-bold">Log In</Text>
-              )}
-            </TouchableOpacity>
+    <SafeAreaView className="flex-1 justify-center items-center">
+      <View className="justify-center items-center bg-white py-6 w-[90%] rounded-md shadow-md drop-shadow-md">
+        <Text className="mb-8 font-bold text-xl">WELCOME</Text>
+        {error && (
+          <View className="w-4/5 mb-5 bg-red-100 py-1 px-2 rounded-[4px]">
+            <Text className="text-[10px] text-red-600">{error}</Text>
           </View>
         )}
-      </Formik>
+        <Formik
+          validationSchema={loginValidationSchema}
+          initialValues={{
+            username: '',
+            password: '',
+            expiresInMins: 1440,
+          }}
+          onSubmit={(values: FormLogin) => onLogin(values)}>
+          {({
+            handleChange,
+            handleSubmit,
+            handleBlur,
+            values,
+            errors,
+            touched,
+            isValid,
+          }) => (
+            <View className="w-full mb-5">
+              <View className="w-4/5 self-center mb-4">
+                <View className="border border-gray-600 px-2 py-3 rounded-[4px] relative">
+                  <Text className="absolute top-[-10px] left-1 bg-white px-1 text-gray-600">
+                    Username
+                  </Text>
+                  <TextInput
+                    editable={!loading}
+                    onBlur={handleBlur('username')}
+                    onChangeText={handleChange('username')}
+                    value={values.username}
+                  />
+                </View>
+                {errors.username && touched.username && (
+                  <FormError text={errors.username} />
+                )}
+              </View>
 
-      <View className="flex-row">
-        <Text>Dont have account ? </Text>
-        <TouchableOpacity>
-          <Text
-            onPress={() => navigation.navigate('Signup')}
-            className="text-[#106EEA] underline">
-            Signup now
-          </Text>
-        </TouchableOpacity>
+              <View className="w-4/5 self-center mb-4">
+                <View className="border border-gray-600 px-2 py-3 rounded-[4px] relative">
+                  <Text className="absolute top-[-10px] left-1 bg-white px-1 text-gray-600">
+                    Password
+                  </Text>
+                  <TextInput
+                    editable={!loading}
+                    className="pr-10"
+                    onBlur={handleBlur('password')}
+                    onChangeText={handleChange('password')}
+                    value={values.password}
+                    secureTextEntry={!showPassword}
+                  />
+                  <TouchableOpacity
+                    onPress={handleShowPassword}
+                    className={`absolute right-2 ${
+                      Platform.OS === 'ios' ? 'bottom-2' : 'bottom-3'
+                    }`}>
+                    {showPassword ? (
+                      <Icon
+                        name="eye-with-line"
+                        type="entypo"
+                        color="#517fa4"
+                      />
+                    ) : (
+                      <Icon name="eye" type="entypo" color="#517fa4" />
+                    )}
+                  </TouchableOpacity>
+                </View>
+                {errors.password && touched.password && (
+                  <FormError text={errors.password} />
+                )}
+              </View>
+              <TouchableOpacity
+                disabled={loading || !isValid}
+                onPress={() => handleSubmit()}
+                className={`bg-[#106EEA] rounded-[4px] py-2 px-5 w-[150px] self-center ${
+                  loading || !isValid ? 'opacity-50' : 'opacity-100'
+                }`}>
+                {loading ? (
+                  <View className="flex-row items-center space-x-2">
+                    <ActivityIndicator color="#FFF" />
+                    <Text className="text-white">Loading ...</Text>
+                  </View>
+                ) : (
+                  <Text className="mx-auto text-white font-bold">Log In</Text>
+                )}
+              </TouchableOpacity>
+            </View>
+          )}
+        </Formik>
+
+        <View className="flex-row">
+          <Text>Dont have account ? </Text>
+          <TouchableOpacity>
+            <Text
+              onPress={() => navigation.navigate('Signup')}
+              className="text-[#106EEA] underline">
+              Signup now
+            </Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </SafeAreaView>
   );
