@@ -2,11 +2,15 @@ import React, {useEffect} from 'react';
 import {SafeAreaView, Text} from 'react-native';
 import {PropsNavigation} from 'interfaces';
 import {StackActions} from '@react-navigation/native';
+import {useSelector} from 'react-redux';
+import {AuthState} from 'interfaces/auth';
 
 const Splash = ({navigation}: PropsNavigation) => {
+  const {user} = useSelector((state: AuthState) => state.auth);
   useEffect(() => {
     setTimeout(() => {
-      navigation.dispatch(StackActions.replace('Login'));
+      if (user) navigation.dispatch(StackActions.replace('Home'));
+      else navigation.dispatch(StackActions.replace('Login'));
     }, 2000);
   }, []);
 

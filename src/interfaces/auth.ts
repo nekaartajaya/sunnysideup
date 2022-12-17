@@ -9,6 +9,7 @@ export interface User {
 }
 
 export interface AuthState {
+  auth: any;
   accessToken: string;
   user: User | null;
 }

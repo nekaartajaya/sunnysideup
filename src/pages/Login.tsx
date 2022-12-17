@@ -14,10 +14,15 @@ import {FormLogin} from 'interfaces/form';
 import * as yup from 'yup';
 import FormError from 'components/FormError';
 import {Formik} from 'formik';
+import {loginAPI} from 'api/authAPI';
+import {useDispatch} from 'react-redux';
+import {SET_ACCESS_TOKEN, SET_USER} from 'redux/actions/types/auth';
 
 const Login = ({navigation}: PropsNavigation) => {
+  const dispatch = useDispatch();
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string>('');
 
   const handleShowPassword = () => {
     setShowPassword(!showPassword);
@@ -28,18 +33,39 @@ const Login = ({navigation}: PropsNavigation) => {
     password: yup.string().required('Password is required'),
   });
 
-  const onLogin = ({values}: {values: FormLogin}) => {
+  const onLogin = async (values: FormLogin) => {
     console.log(values);
+    setError('');
     setLoading(true);
-    setTimeout(() => {
+
+    const resp = await loginAPI(values);
+    if (resp?.status === 200) {
+      dispatch({type: SET_ACCESS_TOKEN, payload: resp?.data?.token});
+      dispatch({
+        type: SET_USER,
+        payload: {
+          username: resp?.data?.username,
+          image: resp?.data?.image,
+        },
+      });
+      setTimeout(() => {
+        setLoading(false);
+        navigation.dispatch(StackActions.replace('Home'));
+      }, 2000);
+    } else {
+      setError(resp?.data);
       setLoading(false);
-      navigation.dispatch(StackActions.replace('Home'));
-    }, 3000);
+    }
   };
 
   return (
     <SafeAreaView className="flex-1 justify-center items-center bg-white">
       <Text className="mb-8">WELCOME</Text>
+      {error && (
+        <View className="w-4/5 mb-5 bg-red-100 py-1 px-2 rounded-[4px]">
+          <Text className="text-[10px] text-red-600">{error}</Text>
+        </View>
+      )}
       <Formik
         validationSchema={loginValidationSchema}
         initialValues={{
