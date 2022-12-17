@@ -1,5 +1,4 @@
-import {FormLogin} from 'interfaces/form';
-import {FormSignup} from '../interfaces/form';
+import {FormLogin, FormSignup} from 'interfaces/form';
 import axiosAuthInstance from './axiosAuthInstance';
 
 export const loginAPI = async (params: FormLogin) => {

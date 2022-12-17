@@ -1,18 +1,20 @@
 import axios from 'axios';
-import {useSelector} from 'react-redux';
-import {AuthState} from 'interfaces/auth';
-import axiosBaseConfig from './axiosBaseConfig';
-
-const {accessToken} = useSelector((state: AuthState) => state.auth);
+import {
+  axiosBaseConfig,
+  axiosInterceptorRequest,
+  axiosInterceptorResponseError,
+} from './axiosBaseConfig';
 
 const axiosInstance = axios.create(axiosBaseConfig);
 
-axiosInstance.interceptors.request.use(async (req: any) => {
-  if (!accessToken) {
-    req.headers.Authorization = `Bearer ${accessToken}`;
-  }
+axiosInstance.interceptors.request.use(axiosInterceptorRequest);
 
-  return req;
-});
+axiosInstance.interceptors.response.use(
+  response => response,
+  error =>
+    axiosInterceptorResponseError({
+      error,
+    }),
+);
 
 export default axiosInstance;
