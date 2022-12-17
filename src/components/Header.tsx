@@ -5,7 +5,7 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 
 const Header = () => {
   return (
-    <SafeAreaView className="bg-white">
+    <SafeAreaView className="bg-white mb-2">
       <View className="flex-row justify-between items-center py-2 px-3">
         <View className="flex-row space-x-2 items-center">
           <Avatar
