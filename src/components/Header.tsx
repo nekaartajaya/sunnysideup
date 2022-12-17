@@ -4,9 +4,16 @@ import {Avatar} from '@rneui/themed';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {useSelector} from 'react-redux';
 import {AuthState} from 'interfaces/auth';
+import {StackActions, useNavigation} from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Header = () => {
+  const navigation = useNavigation();
   const {user} = useSelector((state: AuthState) => state.auth);
+  const onLogout = async () => {
+    await AsyncStorage.removeItem('persist:root');
+    navigation.dispatch(StackActions.replace('Login'));
+  };
   return (
     <SafeAreaView className="bg-white mb-2">
       <View className="flex-row justify-between items-center py-2 px-3">
@@ -21,7 +28,9 @@ const Header = () => {
           />
           <Text className="text-md font-bold">{user?.username}</Text>
         </View>
-        <TouchableOpacity className="border border-[#106EEA] px-2 py-1 rounded-[4px]">
+        <TouchableOpacity
+          onPress={onLogout}
+          className="border border-[#106EEA] px-2 py-1 rounded-[4px]">
           <Text className="text-[#106EEA]">Logout</Text>
         </TouchableOpacity>
       </View>
