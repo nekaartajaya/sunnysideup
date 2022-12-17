@@ -2,6 +2,8 @@ import {View, Text, TouchableOpacity, Image} from 'react-native';
 import React from 'react';
 import {Icon} from '@rneui/themed';
 import {ProductInterface} from 'interfaces/product';
+import {useNavigation} from '@react-navigation/native';
+import {PropsNavigation} from 'interfaces/navigation';
 
 const Product = ({
   title,
@@ -11,9 +13,23 @@ const Product = ({
   stock,
   brand,
   thumbnail,
+  category,
 }: ProductInterface) => {
+  const navigation: PropsNavigation = useNavigation();
+  const handleViewDetail = () => {
+    navigation.navigate('ProductDetail', {
+      title,
+      description,
+      price,
+      rating,
+      stock,
+      brand,
+      thumbnail,
+      category,
+    });
+  };
   return (
-    <TouchableOpacity onPress={() => null} className="pb-2">
+    <TouchableOpacity onPress={handleViewDetail} className="pb-2">
       <View className="bg-white shadow-sm mr-4 rounded-md w-72">
         <View className="rounded-tl-md rounded-tr-md overflow-hidden">
           <Image source={{uri: thumbnail}} className="w-full h-36" />
