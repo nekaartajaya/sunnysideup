@@ -1,11 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import {SafeAreaView, Text} from 'react-native';
+import {Image, SafeAreaView, View} from 'react-native';
 import {PropsNavigation} from 'interfaces';
 import {StackActions} from '@react-navigation/native';
 import {useSelector} from 'react-redux';
 import {AuthState} from 'interfaces/auth';
 import {getUserAPI} from 'api/userAPI';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import styles from 'utils/styles';
 
 const Splash = ({navigation}: PropsNavigation) => {
   const {user} = useSelector((state: AuthState) => state.auth);
@@ -37,8 +38,13 @@ const Splash = ({navigation}: PropsNavigation) => {
 
   return (
     <>
-      <SafeAreaView className="flex-1 justify-center items-center">
-        <Text>Splash</Text>
+      <SafeAreaView className="flex-1 justify-center items-center bg-white">
+        <View style={styles.splashContainer}>
+          <Image
+            style={styles.splashImage}
+            source={require('assets/images/splash.png')}
+          />
+        </View>
       </SafeAreaView>
     </>
   );
