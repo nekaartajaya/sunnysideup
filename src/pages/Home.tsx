@@ -29,7 +29,7 @@ const Home = () => {
       <SafeAreaView>
         <ScrollView
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={{paddingBottom: 20}}>
+          contentContainerStyle={{paddingBottom: 100}}>
           {categories?.data?.map((cat: string, index: number) => {
             return (
               <RowProduct

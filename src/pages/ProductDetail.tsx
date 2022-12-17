@@ -22,7 +22,7 @@ const ProductDetail = ({navigation}: PropsNavigation) => {
   }: ProductInterface = useRoute();
 
   return (
-    <SafeAreaView className="flex-1">
+    <SafeAreaView className="flex-1 bg-white">
       <Image source={{uri: thumbnail}} className="w-full h-52" />
 
       <View className="p-4 flex-1">

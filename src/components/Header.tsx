@@ -1,4 +1,4 @@
-import {View, Text, SafeAreaView} from 'react-native';
+import {View, Text, SafeAreaView, Platform, StyleSheet} from 'react-native';
 import React from 'react';
 import {Avatar} from '@rneui/themed';
 import {TouchableOpacity} from 'react-native-gesture-handler';
@@ -15,8 +15,11 @@ const Header = () => {
     navigation.dispatch(StackActions.replace('Login'));
   };
   return (
-    <SafeAreaView className="bg-white mb-2">
-      <View className="flex-row justify-between items-center py-2 px-3">
+    <SafeAreaView className="bg-white z-[999]" style={styles.headerShadow}>
+      <View
+        className={`flex-row justify-between items-center px-3  ${
+          Platform.OS === 'ios' ? 'py-2' : 'pt-8 pb-2'
+        }`}>
         <View className="flex-row space-x-2 items-center">
           <Avatar
             size={50}
@@ -39,3 +42,16 @@ const Header = () => {
 };
 
 export default Header;
+
+const styles = StyleSheet.create({
+  headerShadow: {
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.23,
+    shadowRadius: Platform.OS === 'ios' ? 1 : 1.62,
+    elevation: Platform.OS === 'ios' ? 1 : 4,
+  },
+});
