@@ -11,7 +11,8 @@ import Signup from 'pages/Signup';
 
 export type StackParamList = {
   Home: undefined;
-  TabScreen: undefined;
+  Login: undefined;
+  Signup: undefined;
   Splash: undefined;
 };
 
