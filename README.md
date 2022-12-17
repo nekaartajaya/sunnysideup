@@ -4,7 +4,7 @@ This app is using dummy api from https://dummyjson.com/
 
 ### Login
 
-You can use any user's credentials from dummyjson.com/users for login.
+You can use any user's credentials from https://dummyjson.com/users for login.
 
 ### Signup
 
