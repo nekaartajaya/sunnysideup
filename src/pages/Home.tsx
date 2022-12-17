@@ -8,9 +8,14 @@ import {getAllProductAPI, getAllCategoryAPI} from 'api/productAPI';
 import {ProductInterface} from 'interfaces/product';
 
 const Home = () => {
-  const {data: products} = useQuery(['/products'], () => getAllProductAPI());
+  const {isLoading: loadingProducts, data: products} = useQuery(
+    ['/products'],
+    () => getAllProductAPI(),
+  );
 
-  const {data: categories} = useQuery(['/category'], () => getAllCategoryAPI());
+  const {data: categories} = useQuery(['/categories'], () =>
+    getAllCategoryAPI(),
+  );
 
   const filterProductByCategory = (category: string) => {
     return products?.data?.filter(
@@ -31,6 +36,7 @@ const Home = () => {
                 key={index}
                 title={cat}
                 items={filterProductByCategory(cat)}
+                loading={loadingProducts}
               />
             );
           })}
