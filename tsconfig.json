@@ -11,7 +11,8 @@
       "@pages/*": ["src/pages/*"],
       "@redux/*": ["src/redux/*"],
       "@interfaces/*": ["src/interfaces/*"],
-      "@router/*": ["src/router/*"]
+      "@router/*": ["src/router/*"],
+      "@utils/*": ["src/utils/*"]
     }
   },
   "include": ["app.d.ts"]

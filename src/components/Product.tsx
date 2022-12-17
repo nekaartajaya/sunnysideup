@@ -4,6 +4,7 @@ import {Icon} from '@rneui/themed';
 import {ProductInterface} from 'interfaces/product';
 import {useNavigation} from '@react-navigation/native';
 import {PropsNavigation} from 'interfaces/navigation';
+import styles from 'utils/styles';
 
 const Product = ({
   title,
@@ -30,7 +31,7 @@ const Product = ({
   };
   return (
     <TouchableOpacity onPress={handleViewDetail} className="pb-2">
-      <View className="bg-white shadow-sm mr-4 rounded-md w-72">
+      <View className="bg-white mr-4 rounded-md w-72" style={styles.cardShadow}>
         <View className="rounded-tl-md rounded-tr-md overflow-hidden">
           <Image source={{uri: thumbnail}} className="w-full h-36" />
         </View>

@@ -15,6 +15,7 @@ import {FormSignup} from 'interfaces/form';
 import * as yup from 'yup';
 import FormError from 'components/FormError';
 import {signUpAPI} from 'api/authAPI';
+import styles from '../utils/styles';
 
 const Signup = ({navigation}: PropsNavigation) => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -71,7 +72,9 @@ const Signup = ({navigation}: PropsNavigation) => {
 
   return (
     <SafeAreaView className="flex-1 justify-center items-center">
-      <View className="justify-center items-center bg-white py-6 w-[90%] rounded-md shadow-md drop-shadow-md">
+      <View
+        className="justify-center items-center bg-white py-6 w-[90%] rounded-md"
+        style={styles.cardShadow}>
         <Text className="mb-8 font-bold text-xl">SIGN UP FORM</Text>
         {error && (
           <View className="w-4/5 mb-5 bg-red-100 py-1 px-2 rounded-[4px]">

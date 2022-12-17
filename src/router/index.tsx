@@ -6,13 +6,14 @@ import Home from 'pages/Home';
 import Login from 'pages/Login';
 import Signup from 'pages/Signup';
 import ProductDetail from 'pages/ProductDetail';
+import {ProductInterface} from 'interfaces/product';
 
 export type StackParamList = {
   Home: undefined;
   Login: undefined;
   Signup: undefined;
   Splash: undefined;
-  ProductDetail: undefined;
+  ProductDetail: ProductInterface;
 };
 
 const Stack = createStackNavigator<StackParamList>();
