@@ -16,7 +16,6 @@ const Splash = ({navigation}: PropsNavigation) => {
   const [expired, setExpired] = useState<boolean>(false);
   const getUser = async () => {
     const resp = await getUserAPI();
-    console.log({resp});
     if (resp?.status === 401) {
       await AsyncStorage.removeItem('persist:root');
       setExpired(true);

@@ -1,5 +1,4 @@
-import {SET_ACCESS_TOKEN} from 'redux/actions/types';
-import {SET_USER} from 'redux/actions/types';
+import {SET_ACCESS_TOKEN, SET_USER} from 'redux/actions/types';
 import {AuthState} from 'interfaces/auth';
 
 const initialStateAuth: AuthState = {

@@ -1,11 +1,9 @@
 import {View, Text, ScrollView} from 'react-native';
-import React, {ReactNode} from 'react';
+import React, {ReactNode, useState, useEffect} from 'react';
 import Product from './Product';
 import {ProductInterface} from 'interfaces/product';
 import {Skeleton} from '@rneui/themed';
 import ProductLoading from './ProductLoading';
-import {useState} from 'react';
-import {useEffect} from 'react';
 
 const RowProduct = ({
   title,

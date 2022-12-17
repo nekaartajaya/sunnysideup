@@ -21,7 +21,6 @@ export const getAllCategoryAPI = async () => {
   return await axiosInstance
     .get('auth/products/categories')
     .then(response => {
-      console.log(response);
       return {
         data: response?.data,
         status: response?.status,
